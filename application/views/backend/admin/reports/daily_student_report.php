@@ -244,7 +244,7 @@
 
                             <div class="form-group">
                                 <div class="col-sm-9" style="margin-bottom: 10px">
-                                    <a  class="btn btn-success" onclick="get_student_daily_report_view_c()"><?= get_phrase('submit') ?></a>
+                                    <a  class="btn btn-success" onclick="get_teacher_ajmali_report()"><?= get_phrase('submit') ?></a>
                                 </div>
                             </div>
                         </div>
@@ -360,6 +360,27 @@
             return false;
         }
     }
+    function get_teacher_ajmali_report() {
+     
+        var madrasa_id  = $('#madrasa_id').val();
+        var teacher     = $('#teacher').val();
+        var month       = $('#month').val();
+//        alert(teacher_id);
+        if (madrasa_id && month && month) {
+            $.ajax({
+                type:'post',
+                url : '<?= base_url('index.php?exam/load_madrasa_teachers_report') ?>',
+                data: {'madrasa_id':madrasa_id,'teacher':teacher,'month':month},
+                 success: function (response)
+                {
+                    jQuery('#daily_report_view_c').html(response);
+                }
+            });
+        } else {
+            alert('Select All field...');
+            return false;
+        }
+    }
 </script>
 <script>
     $(function () {
@@ -383,14 +404,24 @@
     jQuery('#madrasa_id').on('change',function(){
         var madrasId = jQuery('#madrasa_id').val();
 
-       jQuery.ajax({
-           type : 'post',
-           url : 'Exam/load_madrasa_teachers',
-           data : {'madrasName':madrasId},
-           success: function(result){
-             alert(result);
-           }
-       });
+
+          jQuery.ajax({
+                type:'post',
+                url : '<?= base_url('index.php?exam/load_madrasa_teachers') ?>',
+                data: {'madrasName':madrasId},
+                success : function(result){
+                  jQuery('#teacher').html(result);
+                }
+            });
+
+//       jQuery.ajax({
+//           type : 'post',
+//           url : 'exam/load_madrasa_teachers',
+//           data : {'madrasName':madrasId},
+//           success: function(result){
+//             alert(result);
+//           }
+//       });
       });
 
 

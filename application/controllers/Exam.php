@@ -482,9 +482,30 @@ class Exam extends CI_Controller {
         $this->load->view('backend/index', $page_data);
     }
     function load_madrasa_teachers(){
-        echo '<pre>';print_R($this->input->post());
+                
        $madrasid = $this->input->post('madrasName');
-       echo $madrasid;die;
+         $teachers = $this->db->get_where('teacher', array('branch_id' => $madrasid))->result(); 
+         
+         foreach($teachers as $row):
+             echo '<option value="'.$row->teacher_id.'">'.$row->name.'</option>';
+         endforeach;
+                
+    }
+    function load_madrasa_teachers_report(){
+//    if ($this->session->userdata('admin_login') != 1)
+//    redirect(base_url(), 'refresh');
+            
+       $madrasa_id  = $this->input->post('madrasa_id');
+       $teacher     = $this->input->post('teacher');
+       $month       = $this->input->post('month');
+                
+
+        $data['madrasa_id'] = $madrasa_id;
+        $data['teacher']    = $teacher;
+        $data['month']      = $month;
+        $this->load->view('backend/admin/reports/print_teacher_ajmali_report', $data);
+                
+                
     }
     function load_daily_report_view($param1, $param2, $param3) {
         $data['student_id'] = $param1;
