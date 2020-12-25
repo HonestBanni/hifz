@@ -242,21 +242,6 @@
                                 </div>
                             </div>
 
-                            <script>
-                                 jQuery(document).ready(function(){ 
-                                  jQuery('#madrasa_id').on('change',function(){
-                                    var madrasId = jQuery('#madrasa_id').val();
-                                   jQuery.ajax({
-                                       type : 'post',
-                                       url : 'Exam/load_madrasa_teachers',
-                                       data : {'madrasName':madrasId},
-                                       success: function(result){
-                                           alert(result);
-                                       }
-                                   });
-                                  });
-                                });
-                            </script>
                             <div class="form-group">
                                 <div class="col-sm-9" style="margin-bottom: 10px">
                                     <a  class="btn btn-success" onclick="get_student_daily_report_view_c()"><?= get_phrase('submit') ?></a>
@@ -394,5 +379,24 @@
 
         });
 
+
+    jQuery('#madrasa_id').on('change',function(){
+        var madrasId = jQuery('#madrasa_id').val();
+
+       jQuery.ajax({
+           type : 'post',
+           url : 'Exam/load_madrasa_teachers',
+           data : {'madrasName':madrasId},
+           success: function(result){
+             alert(result);
+           }
+       });
+      });
+
+
     });
+</script>
+
+<script>
+      
 </script>

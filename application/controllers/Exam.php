@@ -472,8 +472,8 @@ class Exam extends CI_Controller {
     }
 
     function daily_student_report() {
-        if ($this->session->userdata('admin_login') != 1)
-            redirect(base_url(), 'refresh');
+//        if ($this->session->userdata('admin_login') != 1)
+//            redirect(base_url(), 'refresh');
             $this->load->model('Crud_model');
         $page_data['madarasa']  =  $this->Crud_model->dropdown('branches',get_phrase('madrasa_select'),'branch_id','name'); 
                 
@@ -482,7 +482,9 @@ class Exam extends CI_Controller {
         $this->load->view('backend/index', $page_data);
     }
     function load_madrasa_teachers(){
+        echo '<pre>';print_R($this->input->post());
        $madrasid = $this->input->post('madrasName');
+       echo $madrasid;die;
     }
     function load_daily_report_view($param1, $param2, $param3) {
         $data['student_id'] = $param1;
