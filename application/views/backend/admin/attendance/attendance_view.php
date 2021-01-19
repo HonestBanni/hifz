@@ -31,7 +31,8 @@
     <div class="col-sm-4"></div>
     <div class="col-sm-4">
         <div class="tile-stats tile-gray">
-            <div class="icon"><i class="entypo-chart-area"></i></div>
+            <div class="icon">
+                <i class="entypo-chart-area"></i></div>
 
             <h3 style="color: #696969;"><?php echo get_phrase('attendance'); ?> <?php echo $teacher_name ?></h3>
             <h4 style="color: #696969;" dir="ltr">

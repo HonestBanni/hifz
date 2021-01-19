@@ -68,7 +68,8 @@ class Admission extends CI_Controller {
         $this->db->where('student_id', $student_id);
         $this->db->update('student', array('reg_no' => $reg_no));
 
-        if (!empty(($_FILES["student_image"]["name"]))) {
+        if(!empty($_FILES["student_image"]["name"])){
+        
             $image_data = $this->crud_model->upload_image('student_image', 'student_image');
             $where = $this->db->where('student_id', $student_id);
             $this->crud_model->update('student', $image_data, $where);
@@ -133,7 +134,7 @@ class Admission extends CI_Controller {
         $this->db->where('student_id', $student_id);
         $this->db->update('student', $data);
 
-        if (!empty(($_FILES["student_image"]["name"]))) {
+        if(!empty($_FILES["student_image"]["name"])){
             $image_data = $this->crud_model->upload_image('student_image', 'student_image');
             $where = $this->db->where('student_id', $student_id);
             $this->crud_model->update('student', $image_data, $where);

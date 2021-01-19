@@ -18,6 +18,7 @@ class Exam extends CI_Controller {
         $this->load->database();
         $this->load->library('session');
         $this->load->model('exam_model');
+        $this->load->model('Crud_model');
 
         /* cache control */
         $this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
@@ -472,9 +473,10 @@ class Exam extends CI_Controller {
     }
 
     function daily_student_report() {
-//        if ($this->session->userdata('admin_login') != 1)
-//            redirect(base_url(), 'refresh');
-            $this->load->model('Crud_model');
+        if ($this->session->userdata('admin_login') != 1)
+           redirect(base_url(), 'refresh');
+        
+        $this->load->model('Crud_model');
         $page_data['madarasa']  =  $this->Crud_model->dropdown('branches',get_phrase('madrasa_select'),'branch_id','name'); 
                 
         $page_data['page_name'] = 'reports/daily_student_report';
@@ -536,5 +538,10 @@ class Exam extends CI_Controller {
         $data['month'] = $param2;
         $this->load->view('backend/admin/reports/print_daily_class_report', $data);
     }
-
+    function ajmali_attendance_report(){
+        $branch_id = $this->input->post('branchId'); 
+                  // $this->db->join('tbl_hifz_record','tbl_hifz_record.mobile=teacher.phone');
+        $data['result'] =   $this->db->get_where('teacher',array('branch_id'=>$branch_id))->result();
+        $this->load->view('backend/admin/reports/student_tabulation_sheet_view', $data);
+    }
 }

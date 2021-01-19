@@ -77,6 +77,7 @@ $db['default'] = array(
     'cachedir' => '',
     'char_set' => 'utf8',
     'dbcollat' => 'utf8_general_ci',
+    'db_debug' => (ENVIRONMENT !== 'production'),
     'swap_pre' => '',
     'encrypt' => FALSE,
     'compress' => FALSE,

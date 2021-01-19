@@ -34,9 +34,7 @@ $month_name = $this->crud_model->get_georg_month($month);?>
 
                              $this->db->join('student','student.reg_no=tbl_hifz_record.reg_no');
                     $dbDetails = $this->db->get_where('tbl_hifz_record',$where)->row();
-//                echo '<pre>';print_r($dbDetails);
-//                $leason_a = $this->db->get_where('daily_student_report', array('student_id' => $student_id, 'date' => $timestamp))->row()->lesson_a;
-                ?>
+             ?>
                 <td><?php  if($dbDetails): echo  $dbDetails->juz_text.'-'.$dbDetails->sura_text; endif; ?></td>
             <?php } ?>
         </tr>

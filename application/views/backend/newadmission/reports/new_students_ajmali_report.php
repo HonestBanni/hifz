@@ -40,6 +40,7 @@
             <div class="col-md-12">
                 <table align='center' width='90%' border='1' style="border: 1px solid black; border-collapse: collapse; line-height: 2.5; text-align: center">
                     
+                    
                     <tr>
                         <td><?= 'تمام داخلہ طلبہ' ?></td>
                         <td><?= $this->db->where(array('year' => $running_year, 'branch_id' => $branch_id1))->from("new_enroll")->count_all_results(); ?></td>

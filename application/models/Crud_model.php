@@ -8,6 +8,7 @@ class Crud_model extends CI_Model {
     function __construct() {
 
         parent::__construct();
+        ini_set('display_errors', 1);
     }
 
     function clear_cache() {
@@ -372,6 +373,18 @@ class Crud_model extends CI_Model {
 			}
 			return $data;
 		}
-	} 
+	}
+      public  function get_students_signle_tabulation_sheet($teacher_id, $year)
+        {
+                $this->db->select('enroll.*, student.*');
+                $this->db->from('enroll');
+                $this->db->join('student', 'student.student_id = enroll.student_id', 'inner')->distinct();
+                $this->db->where(array('enroll.teacher_id' => $teacher_id,'enroll.status' => 1,'enroll.year' => $year));
+        return $this->db->get()->result();
+              
 
+
+        
+   
+        }
 }

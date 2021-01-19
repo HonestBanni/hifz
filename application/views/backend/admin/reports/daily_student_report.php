@@ -19,7 +19,7 @@
             </li>
             <li>
                 <a href="#ajmali_report" data-toggle="tab"><i class="entypo-plus-circled"></i>
-                    <?php echo get_phrase('ajmali_report'); ?><!--IJMALI REPORT---->
+                    <?php echo get_phrase('ajmali_report'); ?><!--AJMALI REPORT---->
                 </a>
             </li>
         </ul>
@@ -31,7 +31,7 @@
                     <div class="col-md-4 col-sm-4">
                         <div class="row">
 
-                            
+
                             <div class="form-group">
                                 <label class="col-sm-3 control-label"><?php echo get_phrase('teacher'); ?></label>
                                 <div class="col-sm-9">
@@ -47,6 +47,7 @@
                                 </div>
                             </div>
                             <!--.-->
+
                             <div class="form-group">
                                 <label class="col-sm-3 control-label"><?php echo get_phrase('student'); ?></label>
                                 <div class="col-sm-9">
@@ -110,7 +111,8 @@
                     </div>
                 </div>
             </div>
-            <!--.-->
+            <!--.--> 
+
             <div class="tab-pane box " id="add">
                 <div class="row">
                     <?php echo form_open(base_url(), array('class' => 'form-horizontal form-groups-bordered validate')); ?>
@@ -177,85 +179,35 @@
                             <div class="form-group">
                                 <label class="col-sm-3 control-label"><?php echo get_phrase('madrasa'); ?></label>
                                 <div class="col-sm-9">
-                                    <?php
+                                    <select name="branch_id" class="form-control "  id="branch_id">
+                                        <option value=""><?php echo get_phrase('select_branch'); ?></option>
+                                        <?php
+                                        $branches = $this->db->get('branches')->result_array();
+                                        foreach ($branches as $row):
+                                            ?>
+                                            <option  dir="rtl" value="<?php echo $row['branch_id']; ?>" dir="ltr"><?php echo $row['name']; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                     
-                                    echo form_dropdown('madrasa',$madarasa,'',array('class'=>'form-control','id'=>'madrasa_id'));
-                                    ?>
-                                     
+                                    
+                                    <?php
+                                    //echo form_dropdown('madrasa',$madarasa,'',array('class'=>'form-control','id'=>'madrasa_id'));
+                                    //?>
+
                                 </div>
+
                                 
                             </div>
-                            <br/>
-                            <br/>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label"><?php echo get_phrase('teacher'); ?></label>
-                                <div class="col-sm-9">
-                                    <?php
-                                    $teacher = array(''=>  get_phrase('select_teacher'));
-                                    echo form_dropdown('teacher',$teacher,'',array('class'=>'form-control','id'=>'teacher'));
-                                    ?>
-                                     
-                                </div>
-                            </div>
-                            
-                            <br/>
-                            <br/>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label"><?php echo get_phrase('month'); ?></label>
-                                <div class="col-sm-9">
-                                    <select name="month" class="form-control" id="month">
-                                        <?php
-                                        for ($i = 1; $i <= 12; $i++):
-                                            if ($i == 1)
-                                                $m = 'جنوری';
-                                            else if ($i == 2)
-                                                $m = 'فروری';
-                                            else if ($i == 3)
-                                                $m = 'مارچ ';
-                                            else if ($i == 4)
-                                                $m = 'اپریل ';
-                                            else if ($i == 5)
-                                                $m = 'مئی ';
-                                            else if ($i == 6)
-                                                $m = 'جون ';
-                                            else if ($i == 7)
-                                                $m = 'جولائی ';
-                                            else if ($i == 8)
-                                                $m = 'اگست ';
-                                            else if ($i == 9)
-                                                $m = 'ستمبر ';
-                                            else if ($i == 10)
-                                                $m = 'اکتوبر ';
-                                            else if ($i == 11)
-                                                $m = 'نومبر ';
-                                            else if ($i == 12)
-                                                $m = 'دسمبر ';
-                                            ?>
-                                            <option value="<?php echo $i; ?>"
-                                                    <?php if ($month == $i) echo 'selected'; ?>  >
-                                                        <?php echo get_phrase($m); ?>
-                                            </option>
-                                            <?php
-                                        endfor;
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="col-sm-9" style="margin-bottom: 10px">
-                                    <a  class="btn btn-success" onclick="get_teacher_ajmali_report()"><?= get_phrase('submit') ?></a>
-                                </div>
-                            </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-sm-8  col-md-8" style="padding: 30px;">
                         <div id="daily_report_view_c"></div>
                     </div>
                 </div>
             </div>
-             <div class="tab-pane box " id="class">
+            <div class="tab-pane box " id="class">
                 <div class="row">
                     <div class="col-md-4 col-sm-4">
                         <div class="row">
@@ -276,158 +228,168 @@
                         </div>
                     </div>
                 </div>
+                <!--</div>-->
             </div>
         </div>
     </div>
-</div>
 
 
 
-<script>
-    function get_students(teacher_id) {
-        if (teacher_id !== '') {
-            $.ajax({
-                url: '<?php echo base_url(); ?>index.php?exam/get_students/' + teacher_id,
-                success: function (response)
-                {
+    <script>
+        function get_students(teacher_id) {
+            if (teacher_id !== '') {
+                $.ajax({
+                    url: '<?php echo base_url(); ?>index.php?exam/get_students/' + teacher_id,
+                    success: function(response)
+                    {
 
-                    jQuery('#student').html(response);
-                }
-            });
-        }
-    }
-
-    function get_student(teacher_id) {
-        if (teacher_id !== '') {
-            $.ajax({
-                url: '<?php echo base_url(); ?>index.php?exam/get_students/' + teacher_id,
-                success: function (response)
-                {
-
-                    jQuery('#student_1').html(response);
-                }
-            });
-        }
-    }
-
-    function get_student_daily_report() {
-        $('#loading').show();
-        $('#std_view').hide();
-        var student_id = $('#student').val();
-        var date = $('#date').val();
-        $.ajax({
-            url: '<?php echo base_url(); ?>index.php?exam/get_student_daily_report/' + student_id + '/' + date,
-            success: function (response)
-            {
-                $('#loading').hide();
-                $('#std_view').show();
-                jQuery('#std_view').html(response);
+                        jQuery('#student').html(response);
+                    }
+                });
             }
-        });
-    }
+        }
 
-    function get_student_daily_report_view() {
-        var student_id = $('#student_1').val();
-        var teacher_id = $('#teacher_id_1').val();
-        var month = $('#month').val();
-        if (student_id && teacher_id && month) {
-            $.ajax({
-                url: '<?php echo base_url(); ?>index.php?exam/load_daily_report_view/' + student_id + '/' + teacher_id + '/' + month,
-                success: function (response)
-                {
-                    jQuery('#daily_report_view').html(response);
-                }
-            });
-        } else {
-            alert('Select All field...')
-            return false;
+        function get_student(teacher_id) {
+            if (teacher_id !== '') {
+                $.ajax({
+                    url: '<?php echo base_url(); ?>index.php?exam/get_students/' + teacher_id,
+                    success: function(response)
+                    {
+
+                        jQuery('#student_1').html(response);
+                    }
+                });
+            }
         }
-    }
-    function get_student_daily_report_view_c() {
-        var teacher_id = $('#teacher_id_c').val();
-        var month = $('#month_c').val();
-//        alert(teacher_id);
-        if (teacher_id && month) {
-            $.ajax({
-                url: '<?php echo base_url(); ?>index.php?exam/load_daily_report_class_view/' + teacher_id + '/' + month,
-                success: function (response)
-                {
-                    jQuery('#daily_report_view_c').html(response);
-                }
-            });
-        } else {
-            alert('Select All field...')
-            return false;
-        }
-    }
-    function get_teacher_ajmali_report() {
-     
-        var madrasa_id  = $('#madrasa_id').val();
-        var teacher     = $('#teacher').val();
-        var month       = $('#month').val();
-//        alert(teacher_id);
-        if (madrasa_id && month && month) {
-            $.ajax({
-                type:'post',
-                url : '<?= base_url('index.php?exam/load_madrasa_teachers_report') ?>',
-                data: {'madrasa_id':madrasa_id,'teacher':teacher,'month':month},
-                 success: function (response)
-                {
-                    jQuery('#daily_report_view_c').html(response);
-                }
-            });
-        } else {
-            alert('Select All field...');
-            return false;
-        }
-    }
-</script>
-<script>
-    $(function () {
-        $('form').on('submit', function (e) {
+
+        function get_student_daily_report() {
             $('#loading').show();
             $('#std_view').hide();
-            e.preventDefault();
+            var student_id = $('#student').val();
+            var date = $('#date').val();
             $.ajax({
-                type: 'post',
-                url: '<?= base_url('index.php?exam/student_daily_report_update') ?>',
-                data: $('form').serialize(),
-                success: function (response) {
+                url: '<?php echo base_url(); ?>index.php?exam/get_student_daily_report/' + student_id + '/' + date,
+                success: function(response)
+                {
                     $('#loading').hide();
                     $('#std_view').show();
+                    jQuery('#std_view').html(response);
                 }
+            });
+        }
+
+        function get_student_daily_report_view() {
+            var student_id = $('#student_1').val();
+            var teacher_id = $('#teacher_id_1').val();
+            var month = $('#month').val();
+            if (student_id && teacher_id && month) {
+                $.ajax({
+                    url: '<?php echo base_url(); ?>index.php?exam/load_daily_report_view/' + student_id + '/' + teacher_id + '/' + month,
+                    success: function(response)
+                    {
+                        jQuery('#daily_report_view').html(response);
+                    }
+                });
+            } else {
+                alert('Select All field...')
+                return false;
+            }
+        }
+        function get_student_daily_report_view_c() {
+            var teacher_id = $('#teacher_id_c').val();
+            var month = $('#month_c').val();
+            //        alert(teacher_id);
+            if (teacher_id && month) {
+                $.ajax({
+                    url: '<?php echo base_url(); ?>index.php?exam/load_daily_report_class_view/' + teacher_id + '/' + month,
+                    success: function(response)
+                    {
+                        jQuery('#daily_report_view_c').html(response);
+                    }
+                });
+            } else {
+                alert('Select All field...')
+                return false;
+            }
+        }
+        function get_teacher_ajmali_report() {
+
+            var madrasa_id = $('#madrasa_id').val();
+            var teacher = $('#teacher').val();
+            var month = $('#month').val();
+            //        alert(teacher_id);
+            if (madrasa_id && month && month) {
+                $.ajax({
+                    type: 'post',
+                    url: '<?= base_url('index.php?exam/load_madrasa_teachers_report') ?>',
+                    data: {'madrasa_id': madrasa_id, 'teacher': teacher, 'month': month},
+                    success: function(response)
+                    {
+                        jQuery('#daily_report_view_c').html(response);
+                    }
+                });
+            } else {
+                alert('Select All field...');
+                return false;
+            }
+        }
+    </script>
+    <script>
+        $(function() {
+            $('form').on('submit', function(e) {
+                $('#loading').show();
+                $('#std_view').hide();
+                e.preventDefault();
+                $.ajax({
+                    type: 'post',
+                    url: '<?= base_url('index.php?exam/student_daily_report_update') ?>',
+                    data: $('form').serialize(),
+                    success: function(response) {
+                        $('#loading').hide();
+                        $('#std_view').show();
+                    }
+                });
+
+            });
+
+
+            jQuery('#madrasa_id').on('change', function() {
+                var madrasId = jQuery('#madrasa_id').val();
+
+
+                jQuery.ajax({
+                    type: 'post',
+                    url: '<?= base_url('index.php?exam/load_madrasa_teachers') ?>',
+                    data: {'madrasName': madrasId},
+                    success: function(result) {
+                        jQuery('#teacher').html(result);
+                    }
+                });
+
+                //       jQuery.ajax({
+                //           type : 'post',
+                //           url : 'exam/load_madrasa_teachers',
+                //           data : {'madrasName':madrasId},
+                //           success: function(result){
+                //             alert(result);
+                //           }
+                //       });
+            });
+            jQuery('#branch_id').on('change', function() {
+                var branch_id = jQuery('#branch_id').val();
+                jQuery.ajax({
+                    type: 'post',
+                    url: '<?= base_url('index.php?exam/ajmali_attendance_report') ?>',
+                    data: {'branchId': branch_id},
+                    success: function(responce) {
+                        jQuery('#daily_report_view_c').html(responce);
+                    }
+                });
             });
 
         });
+    </script>
 
+    <script>
 
-    jQuery('#madrasa_id').on('change',function(){
-        var madrasId = jQuery('#madrasa_id').val();
-
-
-          jQuery.ajax({
-                type:'post',
-                url : '<?= base_url('index.php?exam/load_madrasa_teachers') ?>',
-                data: {'madrasName':madrasId},
-                success : function(result){
-                  jQuery('#teacher').html(result);
-                }
-            });
-
-//       jQuery.ajax({
-//           type : 'post',
-//           url : 'exam/load_madrasa_teachers',
-//           data : {'madrasName':madrasId},
-//           success: function(result){
-//             alert(result);
-//           }
-//       });
-      });
-
-
-    });
-</script>
-
-<script>
-      
-</script>
+    </script>

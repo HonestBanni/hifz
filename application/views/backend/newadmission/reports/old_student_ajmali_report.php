@@ -13,7 +13,7 @@
                 $branches = $this->db->get('branches')->result_array();
                 foreach ($branches as $row):
                     ?>
-                    <option value="<?php echo $row['branch_id']; ?>" dir="ltr"><?php echo $row['name']; ?></option>
+                <option value="<?php echo $row['branch_id']; ?>" dir="ltr"><?php echo $row['name']; ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
